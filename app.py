@@ -40,7 +40,7 @@ def plot_repeated_words(text):
     # Filter repeated words to include only those present in the word_freq dictionary
     repeated_words = [word for word, count in word_freq.items() if count > 1][:10]
 
-    # Retrieve counts only for the repeated words present in word_freq
+    # Retrieve counts only for the repeated words present in word_frequeny
     counts = [word_freq[word] for word in repeated_words]
 
     plt.figure(figsize=(10, 6))
