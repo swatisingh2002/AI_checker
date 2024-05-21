@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result</title>
+</head>
+<body>
+    <h1>GPT Checker: AI Plagiarism Detector</h1>
+    <h2>Your Input Text</h2>
+    <div style="background-color: #e0e0e0; padding: 10px; border-radius: 5px;">
+        <p>{{ text_area }}</p>
+    </div>
+    <h2>Detection Score (Perplexity Score and Burstiness Score)</h2>
+    <p>Perplexity Score for the given text: {{ perplexity }}</p>
+    <p>Burstiness Score for the given text: {{ burstiness_score }}</p>
+    <h3>{{ result_message }}</h3>
+    <h2>Basic Details</h2>
+    <div>{{ plot_html|safe }}</div>
+    <h2>Disclaimer</h2>
+    <p>Disclaimer: AI plagiarism detector apps can assist in identifying potential instances of plagiarism; however, it is important to note that their results may not be entirely flawless or completely reliable. These tools employ advanced algorithms, but they can still produce false positives or false negatives. Therefore, it is recommended to use AI plagiarism detectors as a supplementary tool alongside human judgment and manual verification for accurate and comprehensive plagiarism detection.</p>
+    <a href="/">Go Back</a>
+</body>
+</html>
