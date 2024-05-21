@@ -5,4 +5,6 @@ torch
 sentencepiece
 transformers
 plotly
+flask
+scikit-learn
 -e .

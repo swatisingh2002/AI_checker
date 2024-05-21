@@ -17,14 +17,18 @@ tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
 model = GPT2LMHeadModel.from_pretrained('gpt2')
 
 def calculate_perplexity(text):
-    encoded_input = tokenizer.encode(text, add_special_tokens=False, return_tensors='pt')
-    input_ids = encoded_input[0]
+    # Tokenize the text and convert to input IDs
+    encoded_input = tokenizer.encode(text, add_special_tokens=True, return_tensors='pt')
+
+    # Move input and model to the appropriate device (CPU or GPU)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    encoded_input = encoded_input.to(device)
+    model.to(device)
 
     with torch.no_grad():
-        outputs = model(input_ids)
-        logits = outputs.logits
-
-    perplexity = torch.exp(torch.nn.functional.cross_entropy(logits.view(-1, logits.size(-1)), input_ids.view(-1)))
+        outputs = model(encoded_input, labels=encoded_input)
+        loss = outputs.loss
+        perplexity = torch.exp(loss)
     return perplexity.item()
 
 def calculate_burstiness(text):
@@ -43,7 +47,7 @@ def plot_top_repeated_words(text):
     # Count the occurrence of each word
     word_counts = Counter(tokens)
 
-    # Get the top 10 most repeated words
+    # Get the top 15 most repeated words
     top_words = word_counts.most_common(15)
 
     # Extract the words and their counts for plotting
@@ -51,7 +55,7 @@ def plot_top_repeated_words(text):
     counts = [count for word, count in top_words]
 
     # Plot the bar chart using Plotly
-    fig = px.bar(x=words, y=counts, labels={'x': 'Words', 'y': 'Counts'}, title='Top 10 Most Repeated Words')
+    fig = px.bar(x=words, y=counts, labels={'x': 'Words', 'y': 'Counts'}, title='Top 15 Most Repeated Words')
     st.plotly_chart(fig, use_container_width=True)
 
 st.set_page_config(layout="wide")
